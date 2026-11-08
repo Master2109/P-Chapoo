@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="sw" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapati</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Poppins & Volkhov -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Volkhov:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            gold: '#F59E0B',
+                            darkGold: '#D97706',
+                            cream: '#FFFBEB',
+                            accent: '#EF4444',
+                            dark: '#1C1917',
+                            card: '#262320'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Volkhov', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1C1917;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D97706;
+            border-radius: 4px;
+        }
+
+        /* Keyframe animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(245, 158, 11, 0.8); }
+        }
+
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2.5s infinite;
+        }
+
+        /* Glassmorphism */
+        .glass-nav {
+            background: rgba(28, 25, 23, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Reveal animations classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-100 font-sans antialiased selection:bg-brand-gold selection:text-brand-dark">
+
+    <!-- NAV BAR -->
+    <header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav border-b border-amber-900/30" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-tr from-brand-darkGold to-brand-gold flex items-center justify-center text-brand-dark font-bold text-2xl shadow-lg group-hover:scale-105 transition-transform">
+                        <i class="fa-solid font-bold">🫓</i>
+                    </div>
+                    <div>
+                        <span class="text-xl text-brand-gold font-bold">P CHAPOO</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Nav Links -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-gray-300 hover:text-brand-gold transition-colors text-sm font-medium">Kuhusu Sisi</a>
+                    <a href="#menu" class="text-gray-300 hover:text-brand-gold transition-colors text-sm font-medium">Menyu & Bei</a>
+                    <a href="#team" class="text-gray-300 hover:text-brand-gold transition-colors text-sm font-medium">Timu Yetu</a>
+                    <a href="#delivery" class="text-gray-300 hover:text-brand-gold transition-colors text-sm font-medium">Delivery</a>
+                    <a href="#reviews" class="text-gray-300 hover:text-brand-gold transition-colors text-sm font-medium">Ushahidi</a>
+                </nav>
+
+                <!-- WhatsApp CTA & Cart Trigger -->
+                <div class="hidden md:flex items-center gap-4">
+                    <button onclick="toggleCartModal()" class="relative p-2.5 rounded-full bg-stone-800 hover:bg-stone-700 text-amber-400 transition-colors border border-amber-500/20">
+                        <i class="fa-solid fa-basket-shopping text-lg"></i>
+                        <span id="cartCountBadge" class="absolute -top-1 -right-1 bg-brand-accent text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                    <a href="https://wa.me/255614465993?text=Habari!%20Nataka%20kuagiza%20chapati%20tamu%20na%20za%20moto." target="_blank" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-medium text-sm hover:from-emerald-500 hover:to-teal-400 transition-all shadow-lg shadow-emerald-900/30 flex items-center gap-2 pulse-glow">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        <span>Agiza WhatsApp</span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="flex items-center gap-3 md:hidden">
+                    <button onclick="toggleCartModal()" class="relative p-2 rounded-full bg-stone-800 text-amber-400 border border-amber-500/20">
+                        <i class="fa-solid fa-basket-shopping"></i>
+                        <span id="cartCountBadgeMobile" class="absolute -top-1 -right-1 bg-brand-accent text-white text-xs font-bold w-4 h-4 rounded-full flex items-center justify-center hidden">0</span>
+                    </button>
+                    <button id="mobileMenuBtn" class="text-gray-300 hover:text-white focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-stone-900/95 border-b border-amber-900/40 px-4 pt-2 pb-6 space-y-3">
+            <a href="#about" class="block py-2 text-gray-200 hover:text-brand-gold font-medium border-b border-stone-800">Kuhusu Sisi</a>
+            <a href="#menu" class="block py-2 text-gray-200 hover:text-brand-gold font-medium border-b border-stone-800">Menyu & Bei</a>
+            <a href="#team" class="block py-2 text-gray-200 hover:text-brand-gold font-medium border-b border-stone-800">Timu Yetu</a>
+            <a href="#delivery" class="block py-2 text-gray-200 hover:text-brand-gold font-medium border-b border-stone-800">Delivery</a>
+            <a href="#reviews" class="block py-2 text-gray-200 hover:text-brand-gold font-medium border-b border-stone-800">Ushahidi</a>
+            <a href="https://wa.me/255614465993?text=Habari!%20Nataka%20kuagiza%20chapati." target="_blank" class="w-full mt-2 py-3 rounded-xl bg-emerald-600 text-white font-semibold text-center flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-xl"></i> Agiza Moja kwa Moja WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-32 overflow-hidden bg-gradient-to-b from-stone-950 via-stone-900 to-brand-dark">
+        <!-- Background decorative ambient circles -->
+        <div class="absolute top-1/4 left-10 w-72 h-72 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                
+                <!-- Left Text Content -->
+                <div class="text-left space-y-6">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-fire text-brand-accent animate-pulse"></i> Zilizotengenezwa Upya Kila Siku
+                    </div>
+
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold font-serif leading-tight text-white">
+                        Chapati Laini, Tamu na za Moto — <span class="bg-gradient-to-r from-brand-gold via-amber-400 to-amber-200 bg-clip-text text-transparent">Zilizotengenezwa kwa Upendo</span>
+                    </h1>
+
+                    <p class="text-gray-300 text-base sm:text-lg max-w-xl font-light leading-relaxed">
+                        Furahia ladha halisi ya nyumbani! Chapati za kusukuma, chapati za mayai zilizotayarishwa kwa viungo safi na usafi wa hali ya juu kabisa. Tunakuletea zikiwa bado za moto!
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
+                        <a href="#menu" class="px-8 py-4 rounded-xl bg-gradient-to-r from-brand-gold to-brand-darkGold text-stone-950 font-bold text-center hover:shadow-xl hover:shadow-amber-600/20 hover:scale-[1.02] transition-all duration-200 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-utensils"></i> Tazama Menyu & Bei
+                        </a>
+                        <a href="https://wa.me/255614465993?text=Habari!%20Nataka%20kuagiza%20chapati." target="_blank" class="px-8 py-4 rounded-xl bg-stone-800 hover:bg-stone-700 border border-amber-500/30 text-white font-semibold text-center transition-all flex items-center justify-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i> Agiza Moja kwa Moja
+                        </a>
+                    </div>
+
+                    <!-- Trust indicators -->
+                    <div class="pt-6 border-t border-stone-800 grid grid-cols-3 gap-4 text-center sm:text-left">
+                        <div>
+                            <span class="block text-2xl font-bold text-amber-400">100%</span>
+                            <span class="text-xs text-gray-400">Ngano Safi &amp; Salama</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-amber-400">5 Min</span>
+                            <span class="text-xs text-gray-400">Kasi ya Delivery</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl font-bold text-amber-400">4.9 ★</span>
+                            <span class="text-xs text-gray-400">Uhakiki wa Wateja</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Animated Image / Badge -->
+                <div class="relative flex justify-center">
+                    <!-- Rotating backdrop ring -->
+                    <div class="absolute inset-0 rounded-full border-2 border-dashed border-amber-500/20 animate-spin" style="animation-duration: 40s;"></div>
+
+                    <!-- Main Hero Image -->
+                    <div class="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden border-2 border-amber-500/30 shadow-2xl shadow-amber-950/50 group">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/hero-main-image.jpeg" 
+                             alt="Chapati za Moto na Tamu" 
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        
+                        <div class="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-60"></div>
+
+                        <!-- Floating Badges -->
+                        <div class="absolute top-6 right-6 bg-stone-900/90 backdrop-blur-md px-4 py-2.5 rounded-2xl border border-amber-500/30 shadow-xl flex items-center gap-3 animate-float">
+                            <span class="text-2xl">🔥</span>
+                            <div>
+                                <p class="text-xs text-gray-400 font-medium">Hali ya Chapati</p>
+                                <p class="text-xs font-bold text-amber-400">Za Moto Kabisa!</p>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-6 left-6 right-6 bg-stone-950/80 backdrop-blur-md p-4 rounded-2xl border border-stone-800 flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-motorcycle"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-300 font-medium">Huduma ya Delivery</p>
+                                    <p class="text-xs font-bold text-emerald-400">Tunasafirisha Popote Dar</p>
+                                </div>
+                            </div>
+                            <span class="text-xs bg-amber-500 text-stone-950 font-bold px-2.5 py-1 rounded-md uppercase">Haraka</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- HISTORIA & MWANZILISHI (ABOUT & FOUNDER) -->
+    <section id="about" class="py-20 bg-stone-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand-gold text-sm font-semibold uppercase tracking-widest block mb-2">Asili na Historia Yetu</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Jinsi Safari ya Chapati Zetu Ilivyoanza</h2>
+                <div class="w-16 h-1 bg-brand-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- History Text (7 cols) -->
+                <div class="lg:col-span-7 space-y-6 text-gray-300 font-light leading-relaxed reveal">
+                    <p class="text-lg text-amber-200/90 font-normal italic">
+                        "Wazo halikuanza kama biashara kubwa, bali lilizaliwa jikoni nyumbani kutokana na kiu ya kupata chapati zenye ladha halisi ya kiasili, laini zisizokauka haraka."
+                    </p>
+                    <p>
+                        Mwaka 2021, tulianza na jiko dogo la nyumbani tukipikia majirani na marafiki wa karibu. Siri yetu kuu imekuwa moja tu: **Usafi wa 100%, Matumizi ya Unga Bora, na Ufundi wa Kusukuma kwa Tabaka (Layers) Laini.**
+                    </p>
+                    <p>
+                        Leo hii, <strong class="text-white font-semibold">P CHAPOO</strong> inahudumia mamia ya wateja kila siku ikiwemo maofisi, sherehe, na milo ya familia majumbani. Kila chapati inayotoka jikoni kwetu inatayarishwa kwa uangalifu mkubwa ili kukurudishia furaha ya chakula cha nyumbani.
+                    </p>
+
+                    <!-- Highlights feature grid -->
+                    <div class="grid grid-cols-2 gap-4 pt-4">
+                        <div class="p-4 rounded-xl bg-stone-950/60 border border-stone-800 flex items-start gap-3">
+                            <i class="fa-solid fa-leaf text-emerald-400 text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-white text-sm">Viungo Asilia</h4>
+                                <p class="text-xs text-gray-400">Bila kemikali wala vitu vya kuhifadhia.</p>
+                            </div>
+                        </div>
+                        <div class="p-4 rounded-xl bg-stone-950/60 border border-stone-800 flex items-start gap-3">
+                            <i class="fa-solid fa-shield-halved text-amber-400 text-xl mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-white text-sm">Usafi wa Hali ya Juu</h4>
+                                <p class="text-xs text-gray-400">Jiko na wapishi wanazingatia afya.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Founder Card (5 cols) -->
+                <div class="lg:col-span-5 reveal">
+                    <div class="bg-gradient-to-b from-stone-800 to-stone-950 p-6 sm:p-8 rounded-3xl border border-amber-500/20 shadow-2xl relative group">
+                        <div class="absolute -top-4 -right-4 bg-brand-gold text-stone-950 text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
+                            Mwanzilishi &amp; Chef Mkuu
+                        </div>
+
+                        <div class="flex flex-col items-center text-center">
+                            <!-- Founder Photo -->
+                            <div class="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-amber-500/40 mb-6 shadow-xl relative">
+                                <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/founder-chief-image.jpeg" 
+                                         alt="Amina Hassan - Owner" 
+                                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            </div>
+
+                            <h3 class="text-2xl font-bold font-serif text-white">PROSPER MKOJERA</h3>
+                            <p class="text-amber-400 text-sm font-medium mb-4">Founder &amp; Master Culinary Artisan</p>
+                            
+                            <div class="relative bg-stone-900/80 p-4 rounded-2xl border border-stone-800 text-xs text-gray-300 italic mb-6">
+                                <i class="fa-solid fa-quote-left text-amber-500/30 text-2xl absolute -top-2 left-2"></i>
+                                "Lengo langu sio tu kukuuzia chapati, bali ni kuhakikisha kila unapokula chapati kutoka jikoni kwetu inakupa tabasamu na ladha ya nyumbani iliyokamilika."
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <a href="https://wa.me/255754491035" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 hover:bg-emerald-600 text-gray-300 hover:text-white flex items-center justify-center transition-colors">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </a>
+                                <a href="tel:+255754491035" class="flex items-center gap-2 rounded-full bg-stone-800 px-3 py-2 text-xs text-gray-300 hover:bg-amber-600 hover:text-white transition-colors">
+                                    <i class="fa-solid fa-phone"></i>
+                                    <span>+255 754 491 035</span>
+                                </a>
+                            </div>
+
+                            <div class="w-full mt-6">
+                                <div class="rounded-2xl border border-emerald-500/20 bg-stone-900/80 p-3 text-left overflow-hidden">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-14 h-14 rounded-full overflow-hidden border border-emerald-400/40 shrink-0">
+                                            <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/cofounder-image.jpeg" alt="Bakari Juma" class="w-full h-full object-cover">
+                                        </div>
+                                        <div>
+                                            <div class="flex items-center gap-2 text-emerald-400 mb-1">
+                                                <i class="fa-solid fa-crown text-xs"></i>
+                                                <span class="text-[9px] font-semibold uppercase tracking-wider">Co-founder</span>
+                                            </div>
+                                            <p class="text-sm font-bold text-white leading-tight">ERICK KIYOYA</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-[10px] text-gray-400 mt-3 leading-relaxed">
+                                        Mshauri wa ubora, huduma na usalama wa bidhaa. Anaangalia kila hatua kutoka kupika hadi kufikia mteja.
+                                    </p>
+                                    <div class="mt-3 pt-3 border-t border-stone-800 space-y-1.5">
+                                        <a href="tel:+255682177372" class="flex items-center gap-2 text-[10px] text-gray-300 hover:text-emerald-400 transition-colors">
+                                            <i class="fa-solid fa-phone text-emerald-400"></i>
+                                            <span>+255 757296625</span>
+                                        </a>
+                                        <a href="https://wa.me/255712345679?text=Habari%20Bakari%2C%20ninauliza%20kuhusu%20Chapati%20Tamu%20%26%20Hot." target="_blank" class="flex items-center gap-2 text-[10px] text-gray-300 hover:text-emerald-400 transition-colors">
+                                            <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                                            <span>WhatsApp: +255682177372</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MENYU NA BEI (MENU & PRICING) WITH CATEGORY FILTER -->
+    <section id="menu" class="py-20 bg-brand-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-12 reveal">
+                <span class="text-brand-gold text-sm font-semibold uppercase tracking-widest block mb-2">Chaguzi Zetu Tamu</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Menyu &amp; Bei Zetu Wananchi</h2>
+                <p class="text-gray-400 text-sm mt-2">Agiza moja kwa moja au ongeza kwenye kapu lako la WhatsApp</p>
+                <div class="w-16 h-1 bg-brand-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="flex justify-center gap-3 mb-12 flex-wrap reveal">
+                <button onclick="filterMenu('all')" class="menu-filter-btn active px-6 py-2.5 rounded-full bg-amber-500 text-stone-950 font-semibold text-sm transition-all shadow-lg" data-category="all">
+                    Zote Zipo
+                </button>
+                <button onclick="filterMenu('chapati')" class="menu-filter-btn px-6 py-2.5 rounded-full bg-stone-800 hover:bg-stone-700 text-gray-300 font-semibold text-sm transition-all" data-category="chapati">
+                    Aina za Chapati 🫓
+                </button>
+                <button onclick="filterMenu('sides')" class="menu-filter-btn px-6 py-2.5 rounded-full bg-stone-800 hover:bg-stone-700 text-gray-300 font-semibold text-sm transition-all" data-category="sides">
+                    Vitu vya Kusindikiza 🍲
+                </button>
+                <button onclick="filterMenu('packs')" class="menu-filter-btn px-6 py-2.5 rounded-full bg-stone-800 hover:bg-stone-700 text-gray-300 font-semibold text-sm transition-all" data-category="packs">
+                    Packages za Familia 📦
+                </button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8" id="menuGrid">
+                
+                <!-- Item 1: Chapati za Kusukuma -->
+                <div class="menu-item card-chapati bg-stone-900 rounded-3xl border border-stone-800 overflow-hidden hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal" data-cat="chapati">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/menu-chapati-kusukuma.jpg" alt="Chapati za Kusukuma" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-amber-500 text-stone-950 font-bold text-xs px-3 py-1 rounded-full">Inapendwa Zaidi</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-white">Chapati za Kusukuma (Laini)</h3>
+                            <span class="text-lg font-bold text-amber-400">TSH 500</span>
+                        </div>
+                        <p class="text-gray-400 text-xs leading-relaxed">Chapati zenye tabasamu na tabaka nyingi za sura(kitabu). Hazikauki na ni laini sana.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+                            <span class="text-xs text-stone-400"><i class="fa-solid fa-clock text-amber-400 mr-1"></i> Moto Masaa Yote</span>
+                            <button onclick="addToCart('Chapati za Kusukuma', 500)" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-stone-950 font-semibold text-xs transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Ongeza
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3: Chapati Mayai -->
+                <div class="menu-item card-chapati bg-stone-900 rounded-3xl border border-stone-800 overflow-hidden hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal" data-cat="chapati">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/menu-chapati-mayai.jpg" alt="Chapati za Mayai" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-white">Chapati Mayai (Rolex style)</h3>
+                            <span class="text-lg font-bold text-amber-400">TSH 2,000</span>
+                        </div>
+                        <p class="text-gray-400 text-xs leading-relaxed">Chapati iliyofunikwa na yai la kukaanga lenye kitunguu, hoho na viungo safi vya mboga.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+                            <span class="text-xs text-stone-400"><i class="fa-solid fa-egg text-amber-400 mr-1"></i> Protini ya Kutosha</span>
+                            <button onclick="addToCart('Chapati Mayai', 2000)" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-stone-950 font-semibold text-xs transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Ongeza
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4: Maharage ya Nazi (Side) -->
+                <div class="menu-item card-sides bg-stone-900 rounded-3xl border border-stone-800 overflow-hidden hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal" data-cat="sides">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/menu-maharage-nazi.jpg" alt="Maharage ya Nazi" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-white">Maharage ya Nazi Zito</h3>
+                            <span class="text-lg font-bold text-amber-400">TSH 500</span>
+                        </div>
+                        <p class="text-gray-400 text-xs leading-relaxed">Maharage laini yaliyotokotwa kwa tui la nazi, karoti na viungo mbalimbali vya kiasili.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+                            <span class="text-xs text-stone-400"><i class="fa-solid fa-bowl-food text-amber-400 mr-1"></i> Bakuli 1 Full</span>
+                            <button onclick="addToCart('Maharage ya Nazi', 500)" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-stone-950 font-semibold text-xs transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Ongeza
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5: Supu ya utumbo/nyama (Side) -->
+                <div class="menu-item card-sides bg-stone-900 rounded-3xl border border-stone-800 overflow-hidden hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal" data-cat="sides">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/menu-supu.jpg" alt="Supu ya Kuku" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-white">Supu ya Utumbo / Nyama</h3>
+                            <span class="text-lg font-bold text-amber-400">TSH 2,000</span>
+                        </div>
+                        <p class="text-gray-400 text-xs leading-relaxed">Supu yenye ndimu, tangawizi na limao. Tamu sana kuliwa asubuhi na chapati za moto.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+                            <span class="text-xs text-stone-400"><i class="fa-solid fa-mug-hot text-amber-400 mr-1"></i> Moto &amp; Ndimu</span>
+                            <button onclick="addToCart('Supu ya Kuku/Ngombe', 2000)" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-stone-950 font-semibold text-xs transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Ongeza
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6: Soda (Side) -->
+                <div class="menu-item card-sides bg-stone-900 rounded-3xl border border-stone-800 overflow-hidden hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal" data-cat="sides">
+                    <div class="relative h-48 overflow-hidden bg-gradient-to-br from-stone-800 via-stone-950 to-stone-900 flex items-center justify-center" role="img" aria-label="Soda za Pepsi, Coca-Cola, Fanta na Sprite">
+                        <div class="flex items-center gap-3 group-hover:scale-105 transition-transform duration-500">
+                            <div class="w-14 h-28 rounded-xl border border-white/20 bg-gradient-to-b from-blue-500 to-blue-900 shadow-lg flex flex-col items-center justify-center text-white text-center">
+                                <span class="text-[9px] font-bold leading-tight">PEPSI</span>
+                                <span class="text-xl leading-none">●</span>
+                            </div>
+                            <div class="w-14 h-28 rounded-xl border border-white/20 bg-gradient-to-b from-red-500 to-red-900 shadow-lg flex items-center justify-center text-white text-[9px] font-bold text-center">
+                                COCA-<br>COLA
+                            </div>
+                            <div class="w-14 h-28 rounded-xl border border-white/20 bg-gradient-to-b from-orange-400 to-orange-700 shadow-lg flex items-center justify-center text-white text-xs font-black">
+                                FANTA
+                            </div>
+                            <div class="w-14 h-28 rounded-xl border border-white/20 bg-gradient-to-b from-green-400 to-green-800 shadow-lg flex items-center justify-center text-white text-[10px] font-bold">
+                                SPRITE
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-white">Soda ya Chupa</h3>
+                            <span class="text-lg font-bold text-amber-400">TSH 800</span>
+                        </div>
+                        <p class="text-gray-400 text-xs leading-relaxed">Soda ya chupa baridi, inafaa kusindikiza chapati na vyakula vingine.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+                            <span class="text-xs text-stone-400"><i class="fa-solid fa-bottle-water text-amber-400 mr-1"></i> Baridi</span>
+                            <button onclick="addToCart('Soda ya Chupa', 800)" class="px-4 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500 text-amber-400 hover:text-stone-950 font-semibold text-xs transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Ongeza
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6: Pack ya Familia (Pack) -->
+                <div class="menu-item card-packs bg-gradient-to-b from-amber-950/30 to-stone-900 rounded-3xl border border-amber-500/30 overflow-hidden hover:border-amber-500 transition-all duration-300 hover:-translate-y-2 group reveal" data-cat="packs">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/menu-chapati-kusukuma.jpg" alt="Chapati za kusukuma kwenye package ya ofa" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <span class="absolute top-4 left-4 bg-brand-accent text-white font-bold text-xs px-3 py-1 rounded-full">OFA MAALUM</span>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-start">
+                            <h3 class="text-xl font-bold text-white">Pack ya Chapati 20</h3>
+                            <span class="text-lg font-bold text-amber-400">TSH 9,500</span>
+                        </div>
+                        <p class="text-gray-400 text-xs leading-relaxed">Inajumuisha chapati 20 za kusukuma, zikiwa laini na za moto.</p>
+                        <div class="flex items-center justify-between pt-2 border-t border-stone-800">
+                            <span class="text-xs text-emerald-400 font-semibold"><i class="fa-solid fa-tag mr-1"></i> Ofa Maalum</span>
+                            <button onclick="addToCart('Pack ya Chapati 20', 9500)" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs transition-colors flex items-center gap-1.5">
+                                <i class="fa-solid fa-plus"></i> Ongeza Oda
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMU YETU (WORKERS & TEAM CARDS) -->
+    <section id="team" class="py-20 bg-stone-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand-gold text-sm font-semibold uppercase tracking-widest block mb-2">Mikono Inayokupikia</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Wafanyakazi na Timu Yetu</h2>
+                <p class="text-gray-400 text-sm mt-2">Watu waliosimama nyuma ya usafi, ladha na kasi ya delivery</p>
+                <div class="w-16 h-1 bg-brand-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Worker 1 -->
+                <div class="bg-stone-950 p-6 rounded-3xl border border-stone-800 text-center hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-amber-500/30 mb-4 relative">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/worker1-image.jpeg" 
+                             alt="Chef Bakari" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <span class="inline-block px-3 py-1 rounded-full bg-amber-500/10 text-amber-400 text-xs font-semibold mb-2">Mpishi Mkuu</span>
+                    <h3 class="text-lg font-bold text-white">Chef PETER POINT</h3>
+                    <p class="text-xs text-gray-400 mt-1">Mtaalamu wa kukanda unga na kuhakikisha chapati ni laini na hazikauki.</p>
+                </div>
+
+                <!-- Worker 2 -->
+                <div class="bg-stone-950 p-6 rounded-3xl border border-stone-800 text-center hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-amber-500/30 mb-4 relative">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/worker2-image.jpeg" 
+                             alt="Halima Ally" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <span class="inline-block px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold mb-2">Mtaalamu wa Nazi &amp; Sides</span>
+                    <h3 class="text-lg font-bold text-white">VICENT SIMON</h3>
+                    <p class="text-xs text-gray-400 mt-1">Anasukuma na kuhakikisha chapat ipo katika umbo zero</p>
+                </div>
+
+                <!-- Worker 3 -->
+                <div class="bg-stone-950 p-6 rounded-3xl border border-stone-800 text-center hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-amber-500/30 mb-4 relative">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/worker3-image.jpeg" 
+                             alt="Neema John" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <span class="inline-block px-3 py-1 rounded-full bg-purple-500/10 text-purple-400 text-xs font-semibold mb-2">Quality &amp; Packaging</span>
+                    <h3 class="text-lg font-bold text-white">ASHERY EDSON</h3>
+                    <p class="text-xs text-gray-400 mt-1">Kufunga oda kwa usafi na foil za kutunza joto ili ikufikie ikiwa bado ya moto.</p>
+                </div>
+
+                <!-- Worker 4 -->
+                <div class="bg-stone-950 p-6 rounded-3xl border border-stone-800 text-center hover:border-amber-500/40 transition-all duration-300 hover:-translate-y-2 group reveal">
+                    <div class="w-28 h-28 mx-auto rounded-full overflow-hidden border-2 border-amber-500/30 mb-4 relative">
+                        <img src="https://raw.githubusercontent.com/Master2109/P-Chapoo/main/worker4-image.jpeg" 
+                             alt="Rashid Delivery" 
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <span class="inline-block px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold mb-2">Kiongozi wa Delivery</span>
+                    <h3 class="text-lg font-bold text-white">BRIAN 'DEVELOPER'</h3>
+                    <p class="text-xs text-gray-400 mt-1">Anahakikisha oda yako inafika kwa wakati bila kuchelewa maeneo yote ya Dar.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- DELIVERY & CALCULATOR SECTION -->
+    <section id="delivery" class="py-20 bg-brand-dark relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Info Column -->
+                <div class="space-y-6 reveal">
+                    <span class="text-brand-gold text-sm font-semibold uppercase tracking-widest block">Huduma ya Usafirishaji</span>
+                    <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Tunakuletea Chapati Popote Ulipo!</h2>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Tunafanya delivery ya chapati za moto kwenye maofisi, nyumbani, mikutano na sherehe mbalimbali. Pia unaweza kuja kuchukua wewe mwenyewe (Pick-up) jikoni kwetu.
+                    </p>
+
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-stone-900 border border-stone-800">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-box-open text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Packaging ya Hali ya Juu</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">Chapati zinafungwa kwenye foil na hot-bags zinazotunza joto kwa masaa kadhaa.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4 p-4 rounded-2xl bg-stone-900 border border-stone-800">
+                            <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+                                <i class="fa-solid fa-handshake text-lg"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-white text-sm">Oda za Jumla (Catering)</h4>
+                                <p class="text-xs text-gray-400 mt-0.5">Unapika sherehe au msiba? Tunatoa punguzo kwa oda kuanzia chapati 50+.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interactive Delivery Fee Calculator -->
+                <div class="bg-stone-900 p-6 sm:p-8 rounded-3xl border border-stone-800 shadow-2xl reveal">
+                    <h3 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator text-amber-400"></i> Kikokotoo cha Nauli ya Delivery
+                    </h3>
+                    <p class="text-xs text-gray-400 mb-6">Chagua eneo lako uone makadirio ya gharama na muda wa kufika:</p>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-300 mb-2">Chagua Eneo Lako:</label>
+                            <select id="deliveryZone" onchange="calculateDelivery()" class="w-full bg-stone-950 border border-stone-700 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-amber-500">
+                                <option value="0" data-time="0 mins">Self Pick-up (Bure - Kariakoo Center)</option>
+                                <option value="2000" data-time="15-20 mins">Kariakoo / Ilala / Upanga (TSH 2,000)</option>
+                                <option value="3000" data-time="25-35 mins">Kinondoni / Magomeni / Mikocheni (TSH 3,000)</option>
+                                <option value="4000" data-time="30-45 mins">Mwenge / Mbezi Beach / Sinza (TSH 4,000)</option>
+                                <option value="5000" data-time="40-60 mins">Kimara / Ubungo / Tabata (TSH 5,000)</option>
+                                <option value="7000" data-time="50-70 mins">Tegeta / Kigamboni / Mbagala (TSH 7,000)</option>
+                            </select>
+                        </div>
+
+                        <div id="deliveryResult" class="p-4 rounded-2xl bg-stone-950 border border-amber-500/30 hidden">
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-xs text-gray-400">Gharama ya Delivery:</span>
+                                <span id="deliveryCostText" class="text-base font-bold text-amber-400">TSH 0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xs text-gray-400">Makadirio ya Muda:</span>
+                                <span id="deliveryTimeText" class="text-xs font-semibold text-emerald-400">15 mins</span>
+                            </div>
+                        </div>
+
+                        <button onclick="applyDeliveryToOrder()" class="w-full py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-sm transition-all shadow-lg flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-check"></i> Weka Eneo Hili Kwenye Oda
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- USHAHIDI WA WATEJA (TESTIMONIALS SLIDER) -->
+    <section id="reviews" class="py-20 bg-stone-900 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-brand-gold text-sm font-semibold uppercase tracking-widest block mb-2">Maneno ya Wateja</span>
+                <h2 class="text-3xl sm:text-4xl font-bold font-serif text-white">Wateja Wetu Wanasema Nini?</h2>
+                <div class="w-16 h-1 bg-brand-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Testimonials Container -->
+            <div class="relative max-w-4xl mx-auto">
+                <div id="testimonialContainer" class="bg-stone-950 p-8 sm:p-12 rounded-3xl border border-stone-800 shadow-2xl relative">
+                    <i class="fa-solid fa-quote-right text-6xl text-amber-500/10 absolute top-6 right-8 pointer-events-none"></i>
+                    
+                    <div id="testimonialContent" class="space-y-6">
+                        <!-- Dynamic Testimonial Content via JS -->
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex justify-center gap-4 mt-8">
+                    <button onclick="prevTestimonial()" class="w-12 h-12 rounded-full bg-stone-800 hover:bg-amber-500 hover:text-stone-950 text-white flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="nextTestimonial()" class="w-12 h-12 rounded-full bg-stone-800 hover:bg-amber-500 hover:text-stone-950 text-white flex items-center justify-center transition-colors">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER & CONTACT -->
+    <footer class="bg-stone-950 border-t border-stone-800 pt-16 pb-12 text-gray-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-10 mb-12">
+                
+                <!-- Col 1: About -->
+                <div class="space-y-4">
+                    <a href="#" class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-full bg-brand-gold flex items-center justify-center text-stone-950 font-bold text-xl">
+                            🫓
+                        </div>
+                        <span class="text-xl font-bold font-serif text-white"><span class="text-brand-gold">P</span> CHAPOO</span>
+                    </a>
+                    <p class="text-xs leading-relaxed text-gray-400">
+                        Tunapika chapati laini, tamu na za moto kwa usafi na viungo asilia. Agiza sasa uletewe popote Dar es Salaam.
+                    </p>
+                </div>
+
+                <!-- Col 2: Quick Links -->
+                <div>
+                    <h4 class="text-white font-semibold text-base mb-4">Njia za Mkato</h4>
+                    <ul class="space-y-2 text-xs">
+                        <li><a href="#about" class="hover:text-amber-400 transition-colors">Kuhusu Sisi</a></li>
+                        <li><a href="#menu" class="hover:text-amber-400 transition-colors">Menyu &amp; Bei</a></li>
+                        <li><a href="#team" class="hover:text-amber-400 transition-colors">Wafanyakazi Wetu</a></li>
+                        <li><a href="#delivery" class="hover:text-amber-400 transition-colors">Taarifa za Delivery</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3: Contact Info -->
+                <div>
+                    <h4 class="text-white font-semibold text-base mb-4">Mawasiliano</h4>
+                    <ul class="space-y-3 text-xs">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-amber-400"></i>
+                            <span>+255 673558809</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-brands fa-whatsapp text-emerald-400"></i>
+                            <span>+255 614465993</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-location-dot text-amber-400"></i>
+                            <span>Kinada cha Mkaa, karibu na A7 / Agape Center / KKKT</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Col 4: Socials -->
+                <div>
+                    <h4 class="text-white font-semibold text-base mb-4">Mitandao ya Kijamii</h4>
+                    <p class="text-xs text-gray-400 mb-4">Tufuate TikTok kuona jinsi tunavyopika kila siku!</p>
+                    <div class="flex gap-3">
+                        <a href="https://www.tiktok.com/@de_ron26?_r=1&amp;_t=ZS-9BEXV71tDCj" target="_blank" rel="noopener noreferrer" aria-label="Tufuate TikTok" class="w-9 h-9 rounded-full bg-stone-900 border border-stone-800 hover:border-amber-400 text-gray-300 hover:text-amber-400 flex items-center justify-center transition-colors">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-8 overflow-hidden rounded-2xl border border-stone-800">
+                <iframe
+                    src="https://maps.google.com/maps?q=Kinada%20cha%20Mkaa%2C%20Dar%20es%20Salaam%20-%20Morogoro%20-%20Iringa%20Rd%2FA7%2C%20near%20Agape%20Center%20or%20KKKT&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                    title="Ramani ya Kinada cha Mkaa karibu na A7, Agape Center au KKKT"
+                    class="w-full h-72 border-0"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+                <a href="https://www.google.com/maps/search/?api=1&amp;query=Kinada%20cha%20Mkaa%2C%20Dar%20es%20Salaam%20-%20Morogoro%20-%20Iringa%20Rd%2FA7%2C%20near%20Agape%20Center%20or%20KKKT"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="block bg-stone-900 px-4 py-3 text-center text-xs text-amber-400 hover:text-amber-300">
+                    Fungua eneo kwenye Google Maps
+                </a>
+            </div>
+
+            <div class="border-t border-stone-900 pt-6 text-center text-xs text-gray-500">
+                <p>&copy; <span id="year"></span> Chapati Tamu &amp; Hot. Haki zote zimehifadhiwa.</p>
+                <div class="mt-3 flex justify-center" aria-label="BM Mr. Honorable logo">
+                    <svg width="90" height="32" viewBox="0 0 280 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="honorableLogoTitle">
+                        <title id="honorableLogoTitle">BM (Mr. Honorable)</title>
+                        <defs>
+                            <path id="honorableLogoArc" d="M 10 53 A 42 42 0 0 1 94 53" />
+                        </defs>
+                        <rect x="3" y="2" width="274" height="96" rx="12" fill="none" stroke="#d4aa52" stroke-width="2"/>
+                        <text fill="#d4aa52" font-family="sans-serif" font-size="8" font-weight="700" letter-spacing="1">
+                            <textPath href="#honorableLogoArc" text-anchor="middle" startOffset="50%">IN HONOR OF</textPath>
+                        </text>
+                        <g transform="translate(28 32) scale(.4)">
+                            <path d="M12 48 L18 24 L32 38 L50 14 L68 38 L82 24 L88 48 C88 52 84 55 78 55 H22 C16 55 12 52 12 48 Z" fill="#d4aa52" stroke="#4a3b2c" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M22 55 H78 C84 55 88 58 88 60 C88 62 84 65 78 65 H22 C16 65 12 62 12 60 C12 58 16 55 22 55 Z" fill="#b88b3a" stroke="#4a3b2c" stroke-width="3" stroke-linejoin="round"/>
+                            <circle cx="18" cy="22" r="4" fill="#2b4c7e"/>
+                            <circle cx="50" cy="12" r="4.5" fill="#2b4c7e"/>
+                            <circle cx="82" cy="22" r="4" fill="#2b4c7e"/>
+                            <circle cx="31" cy="42" r="3" fill="#2b4c7e"/>
+                            <circle cx="69" cy="42" r="3" fill="#c0392b"/>
+                            <path d="M50 32 L52 38 L58 38 L53 42 L55 48 L50 44 L45 48 L47 42 L42 38 L48 38 Z" fill="#f39c12"/>
+                        </g>
+                        <text x="112" y="60" fill="#d4aa52" font-family="sans-serif" font-size="26" font-weight="700">BM</text>
+                        <text x="164" y="60" fill="#b88b3a" font-family="sans-serif" font-size="11" font-weight="600" letter-spacing=".4">(MR. HONORABLE)</text>
+                        <path d="M112 78 C129 70 142 86 159 78 C165 74 168 72 171 78 C174 84 177 82 183 78 C200 70 213 86 230 78" fill="none" stroke="#d4aa52" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SHOPPING CART / ODA MODAL (INTERACTIVE WHATSAPP BUILDER) -->
+    <div id="cartModal" class="fixed inset-0 z-50 flex items-center justify-center bg-stone-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-stone-900 border border-stone-800 rounded-3xl w-full max-w-lg p-6 sm:p-8 m-4 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            
+            <button onclick="toggleCartModal()" class="absolute top-5 right-5 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h3 class="text-2xl font-bold font-serif text-white mb-2 flex items-center gap-2">
+                <i class="fa-solid fa-basket-shopping text-brand-gold"></i> Kapu Lako la Oda
+            </h3>
+            <p class="text-xs text-gray-400 mb-6">Angalia vitu ulivyochagua kisha bofya "Tuma WhatsApp"</p>
+
+            <!-- Cart Items List -->
+            <div id="cartItemsContainer" class="space-y-3 mb-6 max-h-52 overflow-y-auto pr-1">
+                <!-- Dynamic Items Inserted via JS -->
+            </div>
+
+            <!-- Selected Delivery Info -->
+            <div class="p-4 bg-stone-950 rounded-2xl border border-stone-800 mb-6 text-xs space-y-2">
+                <div class="flex justify-between text-gray-300">
+                    <span>Jumla ya Vitu:</span>
+                    <span id="cartSubtotalText" class="font-bold text-white">TSH 0</span>
+                </div>
+                <div class="flex justify-between text-gray-300">
+                    <span>Nauli ya Delivery:</span>
+                    <span id="cartDeliveryText" class="font-bold text-amber-400">TSH 0</span>
+                </div>
+                <div class="border-t border-stone-800 pt-2 flex justify-between text-sm font-bold text-white">
+                    <span>Jumla Kuu (Total):</span>
+                    <span id="cartTotalText" class="text-amber-400">TSH 0</span>
+                </div>
+            </div>
+
+            <!-- Customer Details Form -->
+            <div class="space-y-3 mb-6">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Jina Lako:</label>
+                    <input type="text" id="custName" placeholder="Mfano: Juma Ally" class="w-full bg-stone-950 border border-stone-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-300 mb-1">Eneo la Kufikishiwa / Maelezo ya Ziada:</label>
+                    <input type="text" id="custLocation" placeholder="Mfano: Sinza Kijiweni karibu na Msikitini" class="w-full bg-stone-950 border border-stone-700 rounded-xl px-4 py-2.5 text-white text-sm focus:outline-none focus:border-amber-500">
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <button onclick="sendWhatsAppOrder()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-500 text-white font-bold text-sm hover:from-emerald-500 hover:to-teal-400 transition-all shadow-lg flex items-center justify-center gap-2">
+                <i class="fa-brands fa-whatsapp text-xl"></i> Tuma Oda Moja kwa Moja WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT INTERACTION LOGIC -->
+    <script>
+        // Set Copyright Year
+        document.getElementById('year').innerText = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Filter Menu functionality
+        function filterMenu(category) {
+            const buttons = document.querySelectorAll('.menu-filter-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('bg-amber-500', 'text-stone-950');
+                    btn.classList.remove('bg-stone-800', 'text-gray-300');
+                } else {
+                    btn.classList.remove('bg-amber-500', 'text-stone-950');
+                    btn.classList.add('bg-stone-800', 'text-gray-300');
+                }
+            });
+
+            const items = document.querySelectorAll('.menu-item');
+            items.forEach(item => {
+                if (category === 'all' || item.getAttribute('data-cat') === category) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Cart & Order State
+        let cart = [];
+        let selectedDeliveryCost = 0;
+        let selectedDeliveryZoneName = "Self Pick-up";
+
+        function addToCart(name, price) {
+            const existing = cart.find(item => item.name === name);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ name: name, price: price, qty: 1 });
+            }
+            updateCartUI();
+            
+            // Show subtle feedback message
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-5 right-5 bg-emerald-600 text-white text-xs px-4 py-2.5 rounded-xl shadow-2xl z-50 animate-bounce';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> "${name}" imeongezwa kwenye kapu!`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        }
+
+        function updateQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const badgeDesktop = document.getElementById('cartCountBadge');
+            const badgeMobile = document.getElementById('cartCountBadgeMobile');
+            
+            const totalCount = cart.reduce((sum, i) => sum + i.qty, 0);
+            
+            if (totalCount > 0) {
+                badgeDesktop.innerText = totalCount;
+                badgeDesktop.classList.remove('hidden');
+                badgeMobile.innerText = totalCount;
+                badgeMobile.classList.remove('hidden');
+            } else {
+                badgeDesktop.classList.add('hidden');
+                badgeMobile.classList.add('hidden');
+            }
+
+            if (cart.length === 0) {
+                container.innerHTML = `<p class="text-xs text-gray-500 text-center py-6">Kapu lako lipo wazi kwa sasa. Ongeza vitu kutoka kwenye menyu!</p>`;
+            } else {
+                container.innerHTML = cart.map((item, idx) => `
+                    <div class="flex items-center justify-between p-3 rounded-xl bg-stone-950 border border-stone-800 text-xs">
+                        <div>
+                            <p class="font-bold text-white">${item.name}</p>
+                            <p class="text-gray-400">TSH ${item.price.toLocaleString()} x ${item.qty}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button onclick="updateQty(${idx}, -1)" class="w-6 h-6 rounded-md bg-stone-800 text-gray-300 font-bold hover:bg-stone-700">-</button>
+                            <span class="text-white font-bold">${item.qty}</span>
+                            <button onclick="updateQty(${idx}, 1)" class="w-6 h-6 rounded-md bg-stone-800 text-gray-300 font-bold hover:bg-stone-700">+</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Calculate totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const total = subtotal + selectedDeliveryCost;
+
+            document.getElementById('cartSubtotalText').innerText = `TSH ${subtotal.toLocaleString()}`;
+            document.getElementById('cartDeliveryText').innerText = `TSH ${selectedDeliveryCost.toLocaleString()}`;
+            document.getElementById('cartTotalText').innerText = `TSH ${total.toLocaleString()}`;
+        }
+
+        function toggleCartModal() {
+            const modal = document.getElementById('cartModal');
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // Delivery Calculator Logic
+        function calculateDelivery() {
+            const select = document.getElementById('deliveryZone');
+            const cost = parseInt(select.value);
+            const selectedOption = select.options[select.selectedIndex];
+            const time = selectedOption.getAttribute('data-time');
+            selectedDeliveryZoneName = selectedOption.text;
+
+            selectedDeliveryCost = cost;
+
+            const resBox = document.getElementById('deliveryResult');
+            resBox.classList.remove('hidden');
+            document.getElementById('deliveryCostText').innerText = `TSH ${cost.toLocaleString()}`;
+            document.getElementById('deliveryTimeText').innerText = time;
+
+            updateCartUI();
+        }
+
+        function applyDeliveryToOrder() {
+            calculateDelivery();
+            toggleCartModal();
+        }
+
+        // Send WhatsApp Message Builder
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert("Tafadhali ongeza kamalau bidhaa moja kwenye kapu kwanza!");
+                return;
+            }
+
+            const name = document.getElementById('custName').value.trim() || "Mteja";
+            const location = document.getElementById('custLocation').value.trim() || selectedDeliveryZoneName;
+
+            let message = `Habari Chapati Tamu & Hot! Nataka kuagiza:\n\n`;
+            
+            cart.forEach(item => {
+                message += `• ${item.name} (x${item.qty}) - TSH ${(item.price * item.qty).toLocaleString()}\n`;
+            });
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const total = subtotal + selectedDeliveryCost;
+
+            message += `\n*Gharama za Chakula:* TSH ${subtotal.toLocaleString()}`;
+            message += `\n*Delivery (${selectedDeliveryZoneName}):* TSH ${selectedDeliveryCost.toLocaleString()}`;
+            message += `\n*JUMLA KUU:* TSH ${total.toLocaleString()}\n`;
+            message += `\n*Jina la Mteja:* ${name}`;
+            message += `\n*Eneo la Delivery:* ${location}`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/255614465993?text=${encodedMessage}`, '_blank');
+        }
+
+        // Testimonials Carousel Data & Logic
+        const testimonials = [
+            {
+                quote: "Chapati zao ni laini sana zisizokauka ata zikikaa jioni! Maharage yao ya nazi pia ni habari nyingine. Delivery iliniwahi ofisini mapema sana.",
+                name: "Grace Mushi",
+                role: "Mteja wa Sinza",
+                stars: 5
+            },
+            {
+                quote: "Niliagiza Pack ya Chapati 20 kwa ajili ya kikao cha ofisi yetu Kariakoo. Wafanyakazi wote walisifu usafi na joto lake. Hakika ni namba moja!",
+                name: "Baraka Kitojo",
+                role: "HR Manager",
+                stars: 5
+            },
+            {
+                quote: "Chapati zina ubora na nilichofurah zaid na kushangaa ni jinsi zinavonyumbulika na kuwa kitabu. Hongereni sana alwasy P CHAPOO No..1",
+                name: "Zulfa Said",
+                role: "Mteja wa Kinondoni",
+                stars: 5
+            }
+        ];
+
+        let currentTestimonialsIndex = 0;
+
+        function renderTestimonial(index) {
+            const data = testimonials[index];
+            const starsHtml = '<i class="fa-solid fa-star text-amber-400"></i> '.repeat(data.stars);
+            
+            const container = document.getElementById('testimonialContent');
+            container.innerHTML = `
+                <div class="flex text-lg gap-1 mb-2">${starsHtml}</div>
+                <p class="text-gray-200 text-base sm:text-xl font-light italic leading-relaxed">"${data.quote}"</p>
+                <div class="pt-4 border-t border-stone-800 flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold text-white text-base">${data.name}</h4>
+                        <p class="text-xs text-amber-400">${data.role}</p>
+                    </div>
+                    <span class="text-xs text-gray-500 font-mono">0${index + 1} / 0${testimonials.length}</span>
+                </div>
+            `;
+        }
+
+        function nextTestimonial() {
+            currentTestimonialsIndex = (currentTestimonialsIndex + 1) % testimonials.length;
+            renderTestimonial(currentTestimonialsIndex);
+        }
+
+        function prevTestimonial() {
+            currentTestimonialsIndex = (currentTestimonialsIndex - 1 + testimonials.length) % testimonials.length;
+            renderTestimonial(currentTestimonialsIndex);
+        }
+
+        // Initialize Testimonials
+        renderTestimonial(0);
+
+        // Scroll Intersection Observer for Entrance Animations
+        document.addEventListener("DOMContentLoaded", () => {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            reveals.forEach(el => revealOnScroll.observe(el));
+        });
+    </script>
+</body>
+</html>
